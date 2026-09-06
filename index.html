@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfinityCraft | Prémium Magyar Minecraft Hálózat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Háttér animációs elemek -->
+    <div class="cyber-grid"></div>
+    <div class="ambient-glow glow-neon-pink"></div>
+    <div class="ambient-glow glow-neon-blue"></div>
+
+    <!-- Fő Hologram Kártya -->
+    <div class="glass-card">
+        
+        <!-- Felső Státusz Sáv -->
+        <div class="status-badge">
+            <span class="pulse-dot"></span> RENDSZER: ONLINE // MULTIPLAYER AKTÍV
+        </div>
+
+        <!-- Logó Szekció -->
+        <div class="brand-container">
+            <h1 class="brand-name">INFINITY<span>CRAFT</span></h1>
+            <p class="brand-tagline">MAGYAR MINECRAFT HÁLÓZAT</p>
+        </div>
+
+        <!-- Tartalom -->
+        <div class="main-body">
+            <h2>LÉPJ BE A JÖVŐBE!</h2>
+            <p>Fedezd fel a legfejlettebb magyar Minecraft szerverhálózatot. Lagmentes játékmenet, egyedi játékmódok és prémium élmény vár rád.</p>
+
+            <!-- Szerver Státusz Doboz -->
+            <div class="hud-panel">
+                <div class="hud-panel-title">
+                    <i class="fa-solid fa-microchip"></i> ÉLŐ ADATOK // RENDSZER INFÓ
+                </div>
+                <div class="hud-list">
+                    <div class="hud-row">
+                        <span class="row-label">Szerver IP:</span>
+                        <span class="row-value ip-interactive" onclick="copyIP()" title="Kattints a másoláshoz!">
+                            infinitycraft.hexaverse.hu <i class="fa-regular fa-copy"></i>
+                        </span>
+                    </div>
+                    <div class="hud-row">
+                        <span class="row-label">Állapot:</span>
+                        <span class="row-value" id="server-status"><span class="status-loading"></span> Kapcsolódás...</span>
+                    </div>
+                    <div class="hud-row">
+                        <span class="row-label">Játékosok:</span>
+                        <span class="row-value" id="server-players">0 / 0</span>
+                    </div>
+                    <div class="hud-row">
+                        <span class="row-label">Rangok:</span>
+                        <span class="row-value"><span class="rank-soon-badge">⚡ HAMAROSAN</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Csapattagok Szekció -->
+            <div class="hud-panel">
+                <div class="hud-panel-title">
+                    <i class="fa-solid fa-users"></i> SZERVER CSAPAT // STAFF
+                </div>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <span class="team-name">Adrian_gaming</span>
+                        <span class="team-role role-owner">Tulajdonos</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">István</span>
+                        <span class="team-role role-owner">Tulajdonos</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">rpg</span>
+                        <span class="team-role role-dev">Fejlesztő</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Macitv</span>
+                        <span class="team-role role-staff">Staff</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Dogdash</span>
+                        <span class="team-role role-builder">Építész</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gombok -->
+            <div class="button-stack">
+                <a href="#" onclick="alert('A webshop hamarosan nyit!'); return false;" class="cyber-button shop-btn">
+                    <i class="fa-solid fa-cart-shopping"></i> WEBSHOP // HAMAROSAN
+                </a>
+                <a href="https://discord.gg/c6sUhNfXU8" target="_blank" class="cyber-button discord-btn">
+                    <i class="fa-brands fa-discord"></i> DISCORD KÖZPONT
+                </a>
+                <a href="https://youtube.com/@adriangamingshorts?si=3c7UvkoEB7bX0xe3" target="_blank" class="cyber-button youtube-btn">
+                    <i class="fa-brands fa-youtube"></i> YOUTUBE CSATORNA
+                </a>
+            </div>
+        </div>
+
+        <!-- Lábjéc -->
+        <div class="footer-sig">
+            [INFINITYCRAFT // 2026] MINDEN JOG FENNTARTVA
+        </div>
+
+    </div>
+
+    <!-- JavaScript: Valós idejű adatok lekérése -->
+    <script>
+        async function fetchServerStatus() {
+            try {
+                let response = await fetch('https://api.mcsrvstat.us/3/infinitycraft.hexaverse.hu');
+                let data = await response.json();
+                
+                let statusEl = document.getElementById('server-status');
+                let playersEl = document.getElementById('server-players');
+
+                if (data.online) {
+                    statusEl.innerHTML = '<span class="dot-online"></span> Elérhető';
+                    playersEl.innerText = `${data.players.online} / ${data.players.max}`;
+                } else {
+                    statusEl.innerHTML = '<span class="dot-offline"></span> Karbantartás';
+                    playersEl.innerText = '0 / 0';
+                }
+            } catch (e) {
+                document.getElementById('server-status').innerHTML = '<span class="dot-offline"></span> Nem elérhető';
+            }
+        }
+
+        function copyIP() {
+            navigator.clipboard.writeText('infinitycraft.hexaverse.hu');
+            alert('Szerver IP vágólapra másolva: infinitycraft.hexaverse.hu');
+        }
+
+        // Futtatás betöltéskor és frissítés
+        fetchServerStatus();
+        setInterval(fetchServerStatus, 3000);
+    </script>
+</body>
+</html>
